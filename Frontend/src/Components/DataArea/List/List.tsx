@@ -2,6 +2,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 import GiftModel from "../../../Models/GiftModel";
 import TargetAudienceModel from "../../../Models/TargetAudienceModel";
 import giftsService from "../../../Services/GiftsService";
+import GiftCard from "../GiftCard/GiftCard";
 import "./List.css";
 
 function List(): JSX.Element {
@@ -26,15 +27,20 @@ function List(): JSX.Element {
 
     return (
         <div className="List">
-            <label>Select Target Audience:</label>
+
+            <label>Select Target Audience: </label>
             <select defaultValue="" onChange={showGifts}>
                 <option disabled value="">Select...</option>
                 {targetAudience.map(t =>
                     <option key={t.targetAudienceId} value={t.targetAudienceId}>
                         {t.targetAudienceName}
-                    </option>)}
+                    </option>
+                )}
             </select>
 
+            <br />
+
+            {gifts.map(g => <GiftCard key={g.giftId} gift={g} />)}
 
         </div>
     );
