@@ -1,4 +1,5 @@
 import express, { Request, Response, NextFunction } from "express";
+import GiftModel from "../4-models/gift-model";
 import logic from "../5-logic/logic";
 
 const router = express.Router(); // Capital R
@@ -20,6 +21,18 @@ router.get("/gifts-per-target-audience/:targetAudienceId", async (request: Reque
         const targetAudienceId = +request.params.targetAudienceId;
         const gifts = await logic.getGiftsByTargetAudience(targetAudienceId);
         response.json(gifts);
+    }
+    catch (err: any) {
+        next(err);
+    }
+});
+
+// POST http://localhost:3001/api/gifts
+router.post("/gifts", async (request: Request, response: Response, next: NextFunction) => {
+    try {
+        const gift = new GiftModel(request.body);
+        const addedGift = await logic.addGift(gift);
+        response.status(201).json(addedGift);
     }
     catch (err: any) {
         next(err);

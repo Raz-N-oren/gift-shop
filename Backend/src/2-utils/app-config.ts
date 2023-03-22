@@ -4,7 +4,7 @@ class AppConfig {
     public host = "localhost"; // Computer name/address of our database
     public user = "root"; // Database user
     public password = ""; // Database password
-    public database = "giftShop"; // Database name
+    public database = "giftshop"; // Database name
 
     // Server port: 
     public port = 3001;

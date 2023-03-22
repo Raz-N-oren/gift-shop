@@ -1,3 +1,4 @@
+import { OkPacket } from "mysql";
 import dal from "../2-utils/dal";
 import GiftModel from "../4-models/gift-model";
 import TargetAudienceModel from "../4-models/target-audience-model";
@@ -20,8 +21,27 @@ async function getGiftsByTargetAudience(targetAudienceId: number): Promise<GiftM
     return gifts;
 }
 
+async function addGift(gift: GiftModel): Promise<GiftModel> {
+    const sql = `
+        INSERT INTO gifts VALUES(
+            DEFAULT,
+            '${gift.targetAudienceId}',
+            '${gift.name}',
+            '${gift.description}',
+            '${gift.price}',
+            '${gift.discount}'
+        )`;
+
+    const info: OkPacket = await dal.execute(sql);
+
+    gift.giftId = info.insertId;
+
+    return gift;
+}
+
 
 export default {
     getAllTargetAudience,
-    getGiftsByTargetAudience
+    getGiftsByTargetAudience,
+    addGift
 };
